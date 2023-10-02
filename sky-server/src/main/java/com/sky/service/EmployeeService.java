@@ -21,4 +21,8 @@ public interface EmployeeService{
 
     void setEmployeeStatus(Integer status,Long employeeId);
 
+    void editEmployeeInfo(EmployeeDTO employeeDTO);
+
+    Employee getEmployeeById(Integer id);
+
 }

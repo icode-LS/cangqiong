@@ -94,7 +94,7 @@ public class EmployeeController {
     }
 
     /**
-     *
+     *启用禁用员工
      */
     @PostMapping("/status/{status}")
     @ApiOperation("启用禁用员工账号")
@@ -102,6 +102,26 @@ public class EmployeeController {
         log.info("开始启用或禁用员工账号===>{},{}",status,id);
         employeeService.setEmployeeStatus(status,id);
         return Result.success();
+    }
+
+    /**
+     *
+     * @param employeeDTO 员工新信息
+     * @return  成功
+     */
+    @PutMapping
+    @ApiOperation("编辑员工")
+    public Result<String> editEmployeeInfo(@RequestBody EmployeeDTO employeeDTO){
+        log.info("开始编辑员工 ....."+employeeDTO);
+        employeeService.editEmployeeInfo(employeeDTO);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询具体员工信息")
+    public Result<Employee> getEmployeeById(@PathVariable Integer id){
+        log.info("根据id查询员工信息 = "+id);
+        return Result.success(employeeService.getEmployeeById(id));
     }
 
     /**
