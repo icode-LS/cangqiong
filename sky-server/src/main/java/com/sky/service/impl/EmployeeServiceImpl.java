@@ -78,13 +78,6 @@ public class EmployeeServiceImpl implements EmployeeService{
         employee.setStatus(StatusConstant.ENABLE);
         //新增员工使用默认密码
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        //设置创建时间和更新时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        //设置当前创建人id和更新人id
-        // 使用ThreadLocal，ThreadLocal为每一个线程提供单独一份的独立空间，可以实现资源共享
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
         //调用mapper方法，存入数据库
         employeeMapper.addEmployee(employee);
     }

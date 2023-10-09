@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.annotation.AutoFill;
 import com.sky.dto.CategoryDTO;
 import com.sky.enumeration.OperationType;
 import com.sky.dto.CategoryPageQueryDTO;
@@ -23,6 +24,7 @@ public interface CategoryMapper {
     @Insert("insert into " +
             "category(type, name, sort, status, create_time, update_time, create_user, update_user)" +
             " values(#{type},#{name},#{sort},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})")
+    @AutoFill(value = OperationType.INSERT)
     void save(Category category);
 
 
@@ -35,18 +37,10 @@ public interface CategoryMapper {
 
     /**
      *
-     *
-     * @param id 要更改状态的分类的Id
-     * @param status 更改后的状态
+     * @param category 更新的信息
      */
-    @Update("update category set status = #{status} where id = #{id}")
-    void setStatus(Long id, Integer status);
-
-    /**
-     *
-     * @param categoryDTO 更新的信息
-     */
-    void update(CategoryDTO categoryDTO);
+    @AutoFill(value = OperationType.UPDATE)
+    void update(Category category);
 
     /**
      *
