@@ -94,4 +94,11 @@ public class CategoryController {
         return Result.success();
     }
 
+    @GetMapping("/list")
+    @ApiOperation("查询相关类型的分类")
+    public Result<List<Category>> selectByType(@RequestParam(required = false) Integer type){
+        log.info("开始查询相关类型的分类 ....");
+        return Result.success(categoryService.list(type));
+    }
+
 }

@@ -39,4 +39,11 @@ public interface CategoryService {
      * @param id
      */
     void startOrStop(Integer status, Long id);
+
+    /**
+     * 查询相关类型的分类
+     * @param type 类型
+     * @return 获取到的分类列表
+     */
+    List<Category> list(Integer type);
 }
