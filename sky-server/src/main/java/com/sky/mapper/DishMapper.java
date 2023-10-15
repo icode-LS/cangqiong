@@ -5,6 +5,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
+import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Delete;
@@ -57,7 +58,13 @@ public interface DishMapper {
      *
      * @param ids 要删除的菜品的id
      */
-
     void deleteById(List<Long> ids);
+
+
+    List<Dish> list(DishDTO dishDTO);
+
+    @Select("select COUNT(1) from dish join setmeal_dish sd on sd.dish_id = dish_id " +
+            "where sd.setmeal_id = #{id} and dish.status = 0")
+    Integer selectBySetmealStatus(Setmeal setmeal);
 
 }

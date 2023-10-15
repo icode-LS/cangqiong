@@ -137,5 +137,10 @@ public class DishServiceImpl implements DishService {
         dishFlavorMapper.deleteByDishId(ids);
     }
 
+    @Override
+    public List<Dish> getByCategoryId(DishDTO dishDTO) {
+        return dishMapper.list(dishDTO);
+    }
+
 
 }
