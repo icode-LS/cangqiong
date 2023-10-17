@@ -20,7 +20,7 @@ import java.util.List;
 
 
 @Slf4j
-@Api("套餐接口")
+@Api(tags = "套餐接口")
 @RestController
 @RequestMapping("/admin/setmeal")
 public class SetmealController {

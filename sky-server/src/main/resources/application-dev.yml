@@ -11,3 +11,8 @@ sky:
     access-key-id: LTAI5t9bK7zjeNRrTHv5nEK8
     access-key-secret: nvG3RZT5nJMWQVSwBQIZFAHwwNubdI
     bucket-name: web-lisen-test
+  redis:
+    host: 192.168.72.128
+    port: 6379
+    password: 13241324aA
+    database: 0
