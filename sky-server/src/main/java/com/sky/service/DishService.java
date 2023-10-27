@@ -18,6 +18,8 @@ public interface DishService {
 
     DishVO getById(Long id);
 
+    List<DishVO> listWithFlavor(Dish dish);
+
     void deleteDishes(List<Long> ids);
 
     List<Dish> getByCategoryId(DishDTO dishDTO);

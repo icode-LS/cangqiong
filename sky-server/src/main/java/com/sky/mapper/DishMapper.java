@@ -61,7 +61,7 @@ public interface DishMapper {
     void deleteById(List<Long> ids);
 
 
-    List<Dish> list(DishDTO dishDTO);
+    List<Dish> list(Dish dish);
 
     @Select("select COUNT(1) from dish join setmeal_dish sd on sd.dish_id = dish_id " +
             "where sd.setmeal_id = #{id} and dish.status = 0")
