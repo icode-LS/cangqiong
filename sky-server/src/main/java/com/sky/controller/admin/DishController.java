@@ -22,7 +22,7 @@ import java.util.Set;
 @RestController("adminDishController")
 @RequestMapping("/admin/dish")
 @Api(tags = "菜品相关接口")
-public class DishController {
+public class  DishController {
 
 
     @Autowired
