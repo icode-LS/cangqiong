@@ -15,6 +15,9 @@ public interface ShoppingCartMapper {
      */
     void add(ShoppingCart shoppingCart);
 
+
+    void insertBatchs(List<ShoppingCart>carts);
+
     /**
      *
      * @param shoppingCart 查询的信息
