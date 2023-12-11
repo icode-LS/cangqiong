@@ -20,6 +20,7 @@ import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import com.sky.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Order;
 import org.springframework.beans.BeanUtils;
@@ -29,9 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -52,6 +51,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserMapper userMapper;
+
+    // websocket
+    @Autowired
+    WebSocketServer webSocketServer;
 
     @Autowired
     private WeChatPayUtil weChatPayUtil;
@@ -139,7 +142,16 @@ public class OrderServiceImpl implements OrderService {
                 .status(Orders.TO_BE_CONFIRMED)
                 .number(ordersPaymentDTO.getOrderNumber()).build();
         orderMapper.update(orders);
-
+        // 向客户端发送消息
+        Map map = new HashMap();
+        // 1代表来单提醒，2代表催单提醒
+        map.put("type",1);
+        // 设置订单id
+        map.put("orderId", orders.getId());
+        // 设置内容
+        map.put("content", orders.getNumber());
+        // 转json字符串
+        webSocketServer.sendToAllClient(JSONObject.toJSONString(map));
         return vo;
     }
 
@@ -363,5 +375,17 @@ public class OrderServiceImpl implements OrderService {
                 .status(Orders.DELIVERY_IN_PROGRESS)
                 .build();
         orderMapper.update(newOrder);
+    }
+
+    @Override
+    public void reminder(Long orderId) {
+        // 获取订单信息
+        Orders order = orderMapper.getById(orderId);
+        // 发送信息
+        Map map = new HashMap();
+        map.put("type", 2);
+        map.put("orderId", orderId);
+        map.put("content", order.getNumber());
+        webSocketServer.sendToAllClient(JSONObject.toJSONString(map));
     }
 }

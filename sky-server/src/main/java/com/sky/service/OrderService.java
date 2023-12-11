@@ -65,6 +65,12 @@ public interface OrderService {
 
     void deliveryOrder(Long orderId);
 
+    /**
+     * 催单方法
+     * @param orderId 订单id
+     */
+    void reminder(Long orderId);
+
 
 
 

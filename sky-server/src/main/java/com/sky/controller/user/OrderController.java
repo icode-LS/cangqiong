@@ -79,5 +79,13 @@ public class OrderController {
         return Result.success(orderInfo);
     }
 
+    @GetMapping("/reminder/{orderId}")
+    @ApiOperation("催单")
+    public Result<String> reminder(@PathVariable Long orderId){
+        log.info("用户催单了 ," + orderId);
+        orderService.reminder(orderId);
+        return Result.success();
+    }
+
 
 }

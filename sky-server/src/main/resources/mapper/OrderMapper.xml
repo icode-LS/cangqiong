@@ -15,7 +15,7 @@
                    #{tablewareNumber},
                    #{tablewareStatus})
     </insert>
-    <update id="update">
+    <update id="update" keyProperty="id" useGeneratedKeys="true">
         update orders
         <set>
             <if test="cancelReason != null and cancelReason!='' ">
