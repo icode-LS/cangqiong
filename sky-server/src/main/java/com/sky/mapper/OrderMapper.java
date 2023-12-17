@@ -8,7 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Objects;
 
 @Mapper
 public interface OrderMapper {
@@ -59,6 +62,21 @@ public interface OrderMapper {
             "        from orders\n" +
             "        where status = #{status};")
     Integer getOrderStatistic(Integer status);
+
+    /**
+     *
+     * @param begin 一天的开始时间
+     * @param end 一天的结束时间
+     * @return 一天的营业额数据
+     */
+    Integer getTurnoverByDate(LocalDateTime begin, LocalDateTime end);
+
+    /**
+     *
+     * @return 订单总数
+     */
+    Integer getOrderCntByDateAndStatus(Map<String, Object> map);
+
 
 }
 

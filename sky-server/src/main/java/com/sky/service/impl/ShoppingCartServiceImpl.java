@@ -40,7 +40,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         // 如果是那么直接将数据库number加一
         if(selectCart != null){
             selectCart.setNumber(selectCart.getNumber()+1);
-            shoppingCartMapper.updateNumberById(shoppingCart);
+            shoppingCartMapper.updateNumberById(selectCart);
         }else{
             // 如果不是，那么则进行插入操作
             // 查询菜品或套餐信息
