@@ -78,5 +78,8 @@ public interface OrderMapper {
     Integer getOrderCntByDateAndStatus(Map<String, Object> map);
 
 
+    Integer countByMap(Map map);
+
+    Double sumByMap(Map map);
 }
 
