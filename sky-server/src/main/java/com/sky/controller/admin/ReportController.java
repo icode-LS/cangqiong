@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
+/**
+ * @author 龙
+ */
 @RestController
 @Api(tags = "数据统计")
 @Slf4j
@@ -61,11 +65,8 @@ public class ReportController {
 
     @GetMapping("/export")
     @ApiOperation("导出Excel报表")
-    public Result<String> exportExcel() {
+    public void exportExcel(HttpServletResponse httpResponse) {
         log.info("导出Excel报表");
-        reportService.export();
-        return Result.success();
+        reportService.export(httpResponse);
     }
-
-
 }
