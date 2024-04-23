@@ -39,4 +39,7 @@ public interface CouponsMapper {
 
     @Insert("insert into user_coupons (user_id, coupons_id) values (#{userId}, #{couponsId});")
     void insertToUserCoupons(Long userId, Long couponsId);
+
+
+    void updateUserCouponsInfoByIds(List<Long> couponsIds, Long userId);
 }

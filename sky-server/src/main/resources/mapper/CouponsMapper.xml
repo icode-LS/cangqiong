@@ -4,10 +4,20 @@
 <mapper namespace="com.sky.mapper.CouponsMapper">
     <insert id="insertOne" keyProperty="id">
         insert into coupons(name, num, full_minus, reduce_price, create_time, create_user, update_time, update_user)
-        values(#{name}, #{num}, #{fullMinus}, #{reducePrice}, #{createTime}, #{createUser}, #{updateTime}, #{updateUser});
+        values (#{name}, #{num}, #{fullMinus}, #{reducePrice}, #{createTime}, #{createUser}, #{updateTime},
+                #{updateUser});
     </insert>
     <update id="update">
 
+    </update>
+    <update id="updateUserCouponsInfoByIds">
+        update user_coupons set status = 1
+        where
+        user_id = #{userId} and
+        coupons_id in
+        <foreach collection="couponsIds" item="item" separator="," close=")" open="(">
+            #{item}
+        </foreach>
     </update>
 
 

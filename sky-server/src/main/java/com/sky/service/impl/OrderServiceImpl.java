@@ -54,6 +54,9 @@ public class OrderServiceImpl implements OrderService {
     private ShoppingCartMapper shoppingCartMapper;
 
     @Autowired
+    private CouponsMapper couponsMapper;
+
+    @Autowired
     private UserMapper userMapper;
 
     @Autowired
@@ -161,6 +164,9 @@ public class OrderServiceImpl implements OrderService {
                 .status(Orders.TO_BE_CONFIRMED)
                 .number(ordersPaymentDTO.getOrderNumber()).build();
         orderMapper.update(orders);
+
+        // 更新用户优惠券信息
+        couponsMapper.updateUserCouponsInfoByIds(ordersPaymentDTO.getCouponsIds(), BaseContext.getCurrentId());
         // 向客户端发送消息
         Map map = new HashMap();
         // 1代表来单提醒，2代表催单提醒
