@@ -23,6 +23,10 @@ import com.sky.vo.OrderVO;
 import com.sky.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Order;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +55,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    private final String DELAY_EXCHANGE = "ttlOrder.exchange";
+
+    private final String DELAY_KEY = "ttlOrder";
 
     // websocket
     @Autowired
@@ -101,6 +112,14 @@ public class OrderServiceImpl implements OrderService {
         orderDetailMapper.insertBatchs(orderDetails);
         // 清空购物车
         shoppingCartMapper.deleteByUserId(userId);
+        // 发送延迟消息
+        rabbitTemplate.convertAndSend(DELAY_EXCHANGE, DELAY_KEY, orders.getNumber(), new MessagePostProcessor() {
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException {
+                message.getMessageProperties().setDelay(15*60*1000);
+                return message;
+            }
+        });
         // 封装vo
         return OrderSubmitVO.builder()
                 .id(orders.getId())

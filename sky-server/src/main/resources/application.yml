@@ -17,6 +17,11 @@ spring:
     port: ${sky.redis.port}
     password: ${sky.redis.password}
     database: ${sky.redis.database}
+  rabbitmq:
+    host: ${sky.rabbitmq.host} # rabbitMQ的ip地址
+    port: ${sky.rabbitmq.port} # 端口
+    username: ${sky.rabbitmq.username}
+    password: ${sky.rabbitmq.password}
 
 mybatis:
   #mapper配置文件
